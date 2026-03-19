@@ -1,0 +1,91 @@
+@startuml name "Sistem Manajemen Perpustakaan"
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 60
+
+' --- Interface & Abstract Classes ---
+interface Borrowable <<Interface>> {
+    + borrowItem(): void
+    + returnItem(): void
+}
+
+abstract class LibraryItem <<Abstract>> {
+    - id: String
+    - title: String
+    - isAvailable: boolean
+    + {abstract} displayItemInfo(): void
+}
+
+abstract class User <<Abstract>> {
+    - userId: String
+    - name: String
+    + {abstract} displayInfo(): void
+}
+
+' --- Concrete Classes (Inheritance) ---
+class Book {
+    - isbn: String
+    - author: String
+    + displayItemInfo(): void <<override>>
+}
+
+class Magazine {
+    - issueNumber: int
+    + displayItemInfo(): void <<override>>
+}
+
+class Member {
+    - borrowedItemsCount: int
+    + displayInfo(): void <<override>>
+}
+
+class Librarian {
+    - shift: String
+    + displayInfo(): void <<override>>
+}
+
+' --- Transaction & Management Classes ---
+class Loan {
+    - loanId: String
+    - loanDate: Date
+    - returnDate: Date
+    + calculateFine(): double
+}
+
+class Library {
+    - name: String
+    + searchItem(title: String): LibraryItem <<overload>>
+    + searchItem(title: String, author: String): LibraryItem <<overload>>
+    + processLoan(member: Member, item: LibraryItem): void <<throws Exception>>
+    + addItem(item: LibraryItem): void <<uses assertion>>
+}
+
+class ItemUnavailableException <<Exception>> {
+    + ItemUnavailableException(message: String)
+}
+
+' --- Relationships ---
+
+' Realization / Implementation
+LibraryItem ..|> Borrowable
+
+' Inheritance
+Book -up-|> LibraryItem
+Magazine -up-|> LibraryItem
+Member -up-|> User
+Librarian -up-|> User
+
+' Aggregation (Library memiliki Item, tapi Item bisa ada tanpa Library)
+Library o--> "0..*" LibraryItem : manages >
+
+' Composition (Loan eksklusif milik Library, Library hancur Loan hilang)
+Library *--> "0..*" Loan : records >
+
+' Association
+Loan --> "1" Member : borrowed by >
+Loan --> "1..*" LibraryItem : includes >
+
+' Dependency for Exception
+Library ..> ItemUnavailableException : throws >
+@enduml
