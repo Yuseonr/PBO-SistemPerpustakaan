@@ -1,0 +1,104 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 70
+skinparam ranksep 70
+
+' --- Interface & Abstract Classes ---
+interface DapatDipinjam <<Interface>> {
+    + pinjamItem(): void
+    + kembalikanItem(): void
+}
+
+abstract class ItemPerpustakaan <<Abstract>> {
+    - idItem: String
+    - judul: String
+    - tahunTerbit: int
+    - isTersedia: boolean
+    - lokasiRak: String
+    + {abstract} tampilkanInfoItem(): void
+}
+
+abstract class Pengguna <<Abstract>> {
+    - idPengguna: String
+    - nama: String
+    - noHp: String
+    + {abstract} tampilkanInfo(): void
+}
+
+' --- Concrete Classes (Inheritance) ---
+class Buku {
+    - isbn: String
+    - penulis: String
+    - kategori: String
+    + tampilkanInfoItem(): void <<override>>
+}
+
+class Majalah {
+    - nomorEdisi: int
+    + tampilkanInfoItem(): void <<override>>
+}
+
+class Anggota {
+    - nim: String
+    - statusAktif: boolean
+    - jumlahPinjaman: int
+    + tampilkanInfo(): void <<override>>
+}
+
+class Perpustakawan {
+    - jadwalShift: String
+    + tampilkanInfo(): void <<override>>
+}
+
+' --- Transaction & Management Classes ---
+class TransaksiPinjaman {
+    - idPinjaman: String
+    - tanggalPinjam: Date
+    - tanggalKembali: Date
+    + hitungDenda(dendaPerHari: double): double
+}
+
+class SistemPerpustakaan {
+    - namaPerpustakaan: String
+    - dendaPerHari: double
+    + cariItem(judul: String): ItemPerpustakaan <<overload>>
+    + cariItem(judul: String, penulis: String): ItemPerpustakaan <<overload>>
+    + prosesPeminjaman(anggota: Anggota, item: ItemPerpustakaan): void <<throws Exception>>
+    + tambahItem(item: ItemPerpustakaan): void <<uses assertion>>
+}
+
+class ItemTidakTersediaException <<Exception>> {
+    + ItemTidakTersediaException(pesan: String)
+}
+
+class BatasPinjamanException <<Exception>> {
+    + BatasPinjamanException(pesan: String)
+}
+
+' --- Relationships ---
+
+' Realization / Implementation
+ItemPerpustakaan ..|> DapatDipinjam
+
+' Inheritance
+Buku -up-|> ItemPerpustakaan
+Majalah -up-|> ItemPerpustakaan
+Anggota -up-|> Pengguna
+Perpustakawan -up-|> Pengguna
+
+' Aggregation 
+SistemPerpustakaan o--> "0..*" ItemPerpustakaan : mengelola >
+
+' Composition 
+SistemPerpustakaan *--> "0..*" TransaksiPinjaman : mencatat >
+
+' Association
+TransaksiPinjaman --> "1" Anggota : dipinjam oleh >
+TransaksiPinjaman --> "1..*" ItemPerpustakaan : mencakup >
+
+' Dependency for Exception
+SistemPerpustakaan ..> ItemTidakTersediaException : melempar >
+SistemPerpustakaan ..> BatasPinjamanException : melempar >
+
+@enduml

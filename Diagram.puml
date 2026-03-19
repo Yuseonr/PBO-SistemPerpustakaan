@@ -1,4 +1,4 @@
-@startuml name "Sistem Manajemen Perpustakaan"
+@startuml nama "Sistem Manajemen Perpustakaan"
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 skinparam nodesep 60
@@ -17,52 +17,52 @@ abstract class LibraryItem <<Abstract>> {
     + {abstract} displayItemInfo(): void
 }
 
-abstract class User <<Abstract>> {
+abstract class Pengguna <<Abstract>> {
     - userId: String
-    - name: String
+    - nama: String
     + {abstract} displayInfo(): void
 }
 
 ' --- Concrete Classes (Inheritance) ---
-class Book {
+class Buku {
     - isbn: String
     - author: String
     + displayItemInfo(): void <<override>>
 }
 
-class Magazine {
+class Megazin {
     - issueNumber: int
     + displayItemInfo(): void <<override>>
 }
 
-class Member {
+class Anggota {
     - borrowedItemsCount: int
     + displayInfo(): void <<override>>
 }
 
-class Librarian {
+class Perpustakawan {
     - shift: String
     + displayInfo(): void <<override>>
 }
 
 ' --- Transaction & Management Classes ---
-class Loan {
+class Pinjaman {
     - loanId: String
     - loanDate: Date
     - returnDate: Date
     + calculateFine(): double
 }
 
-class Library {
-    - name: String
+class Perpustakaan {
+    - nama: String
     + searchItem(title: String): LibraryItem <<overload>>
     + searchItem(title: String, author: String): LibraryItem <<overload>>
-    + processLoan(member: Member, item: LibraryItem): void <<throws Exception>>
+    + processLoan(member: Anggota, item: LibraryItem): void <<throws Exception>>
     + addItem(item: LibraryItem): void <<uses assertion>>
 }
 
-class ItemUnavailableException <<Exception>> {
-    + ItemUnavailableException(message: String)
+class ItemTidakTersediaException <<Exception>> {
+    + ItemTidakTersediaException(message: String)
 }
 
 ' --- Relationships ---
@@ -71,21 +71,21 @@ class ItemUnavailableException <<Exception>> {
 LibraryItem ..|> Borrowable
 
 ' Inheritance
-Book -up-|> LibraryItem
-Magazine -up-|> LibraryItem
-Member -up-|> User
-Librarian -up-|> User
+Buku -up-|> LibraryItem
+Megazin -up-|> LibraryItem
+Anggota -up-|> Pengguna
+Perpustakawan -up-|> Pengguna
 
-' Aggregation (Library memiliki Item, tapi Item bisa ada tanpa Library)
-Library o--> "0..*" LibraryItem : manages >
+' Aggregation (Perpustakaan memiliki Item, tapi Item bisa ada tanpa Perpustakaan)
+Perpustakaan o--> "0..*" LibraryItem : manages >
 
-' Composition (Loan eksklusif milik Library, Library hancur Loan hilang)
-Library *--> "0..*" Loan : records >
+' Composition (Pinjaman eksklusif milik Perpustakaan, Perpustakaan hancur Pinjaman hilang)
+Perpustakaan *--> "0..*" Pinjaman : records >
 
 ' Association
-Loan --> "1" Member : borrowed by >
-Loan --> "1..*" LibraryItem : includes >
+Pinjaman --> "1" Anggota : borrowed by >
+Pinjaman --> "1..*" LibraryItem : includes >
 
 ' Dependency for Exception
-Library ..> ItemUnavailableException : throws >
+Perpustakaan ..> ItemTidakTersediaException : throws >
 @enduml
