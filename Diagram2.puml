@@ -64,7 +64,7 @@ class SistemPerpustakaan {
     - dendaPerHari: double
     + cariItem(judul: String): ItemPerpustakaan <<overload>>
     + cariItem(judul: String, penulis: String): ItemPerpustakaan <<overload>>
-    + prosesPeminjaman(anggota: Anggota, item: ItemPerpustakaan): void <<throws Exception>>
+    + prosesPeminjaman(anggota: Anggota, item: ItemPerpustakaan)
     + tambahItem(item: ItemPerpustakaan): void <<uses assertion>>
 }
 
