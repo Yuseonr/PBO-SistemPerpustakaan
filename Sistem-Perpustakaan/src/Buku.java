@@ -1,5 +1,10 @@
-// yang makei nterface buku
-
+/*
+Nama file    : Buku.java
+Deskripsi    : Berisi Atribute dan Method dalam class Buku
+Pembuat      : 
+Tanggal      : 26 Maret 2025
+Last update  : 26 Maret 2025
+*/
 
 public class Buku extends ItemPerpustakaan{
     /******************** ATRIBUT ********************/
@@ -9,7 +14,8 @@ public class Buku extends ItemPerpustakaan{
 
     /******************** METHODE ********************/
     // Konstruktor tanpa parameter
-    public Buku() {}
+    public Buku() {
+    }
 
     // Konstruktor untuk membuat Buku dengan parameter idItem, judul, tahunTerbit,lokasiRak, pengarang, penerbit, dan kategori
     public Buku(String idItem, String judul, int tahunTerbit, String lokasiRak, String isbn, String penulis,String kategori) {
@@ -20,7 +26,7 @@ public class Buku extends ItemPerpustakaan{
     }
 
     /* SETTER GETTER */
-
+    
     // Mengembalikan ISBN
     public String getIsbn() {
         return isbn;

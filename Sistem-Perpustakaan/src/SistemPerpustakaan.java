@@ -1,20 +1,29 @@
+/*
+Nama file    : SistemPerpustakaan.java
+Deskripsi    : Berisi Atribute dan Method dalam class SistemPerpustakaan
+Pembuat      : 
+Tanggal      : 26 Maret 2025
+Last update  : 26 Maret 2025
+*/
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class SistemPerpustakaan {
     /************** ATRIBUT **************/
     private String namaPerpustakaan;
     private double dendaPerHari;
+    private int batasPinjamanHari;
     private List<ItemPerpustakaan> koleksiItem;
     private List<TransaksiPinjaman> riwayatTransaksi;
 
     /************** METHODE **************/
-    // Konstruktor dengan parameter
-    public SistemPerpustakaan(String namaPerpustakaan, double dendaPerHari) {
+    // Konstruktor dengan parameter namaPerpustakaan, dedaPerhari, dan batasPinjamanHari
+    public SistemPerpustakaan(String namaPerpustakaan, double dendaPerHari, int batasPinjamanHari) {
         this.namaPerpustakaan = namaPerpustakaan;
         this.dendaPerHari = dendaPerHari;
+        this.batasPinjamanHari = batasPinjamanHari;
         this.koleksiItem = new ArrayList<>();
         this.riwayatTransaksi = new ArrayList<>();
     }
@@ -49,35 +58,114 @@ public class SistemPerpustakaan {
         return null;
     }
 
-    // Memproses peminjaman dan dapat melempar exception
-    public void prosesPeminjaman(Anggota anggota, ItemPerpustakaan item) /*throws BatasPinjamanException, ItemTidakTersediaException*/ {
-        // if (!anggota.getStatusAktif()) {
-        //     throw new BatasPinjamanException("Anggota tidak aktif.");
-        // }
+    // Methode untuk menampilkan info detail perpustakaan
+    public void tampilkanInfoPerpustakaan() {
+        System.out.println("Nama Perpustakaan: " + namaPerpustakaan);
+        System.out.println("Denda per Hari: Rp " + dendaPerHari);
+        System.out.println("Batas Pinjaman: " + batasPinjamanHari + " hari");
+        System.out.println("Jumlah Koleksi Item: " + koleksiItem.size());
+        System.out.println("Total Transaksi: " + riwayatTransaksi.size());
+        // Menampilkan daftar item
+        System.out.println("Daftar Item:");
+        for (ItemPerpustakaan item : koleksiItem) {
+            item.tampilkanInfoItem();
+            System.out.println();
+        }
+        // Menampilkan riwayat transaksi
+        System.out.println("Riwayat Transaksi:");
+        for (TransaksiPinjaman transaksi : riwayatTransaksi) {
+            transaksi.tampilkanDetailTransaksi();
+            System.out.println();
+        }
+        // Menampilkan anggota yang sedang meminjam
+        System.out.println("Anggota yang Sedang Meminjam:");
+        for (TransaksiPinjaman transaksi : riwayatTransaksi) {
+            if (transaksi.getTanggalKembali() == null) {
+                System.out.println("- " + transaksi.getPeminjam().getNama());   
+            }
+        }
+
+    }
+
+    // Methode untuk memproses peminjaman dan dapat melempar exception
+    public void prosesPeminjaman(Anggota anggota, List<ItemPerpustakaan> daftarBukuDipinjam) throws BatasPinjamanException, ItemTidakTersediaException {
         
-        // if (anggota.getJumlahPinjaman() >= 3) { // Asumsi batas maksimal 3
-        //     throw new BatasPinjamanException("Batas maksimal peminjaman telah tercapai.");
-        // }
+        // Validasi exception untuk batas pinjaman (maksimal 10 buku)
+        if (anggota.getJumlahPinjaman() + daftarBukuDipinjam.size() > 10) { 
+            throw new BatasPinjamanException("Gagal: Total pinjaman melebihi kuota (>10).\n Saat ini anggota memiliki " + anggota.getJumlahPinjaman() + " pinjaman, dan mencoba meminjam " + daftarBukuDipinjam.size() + " buku.");
+        }
 
-        // if (!item.getIsTersedia()) {
-        //     throw new ItemTidakTersediaException("Item " + item.getJudul() + " sedang dipinjam/tidak tersedia.");
-        // }
+        // Validasi exception untuk item tidak tersedia
+        for (ItemPerpustakaan item : daftarBukuDipinjam) {
+            if (!item.getIsTersedia()) {
+                throw new ItemTidakTersediaException("Item " + item.getJudul() + " sedang dipinjam/tidak tersedia.");
+            }
+        }
 
-        item.pinjamItem();
-        anggota.setJumlahPinjaman(anggota.getJumlahPinjaman() + 1);
+        // Jika semua validasi lolos, proses peminjaman
+        for (ItemPerpustakaan item : daftarBukuDipinjam) {
+            item.pinjamItem();
+        }
+        
+        // Update jumlah pinjaman anggota
+        anggota.setJumlahPinjaman(anggota.getJumlahPinjaman() + daftarBukuDipinjam.size());
 
-        List<ItemPerpustakaan> dipinjam = new ArrayList<>();
-        dipinjam.add(item);
-
-        String idPinjaman = UUID.randomUUID().toString();
+        // Buat transaksi baru dan tambahkan ke riwayat transaksi
+        List<ItemPerpustakaan> dipinjam = new ArrayList<>(daftarBukuDipinjam);
+        String idPinjaman = "TXN - " + (riwayatTransaksi.size() + 1);
         LocalDate tglPinjam = LocalDate.now();
-        LocalDate tglKembali = tglPinjam.plusDays(7); // Asumsi masa pinjam 7 hari
-
-        TransaksiPinjaman transaksi = new TransaksiPinjaman(idPinjaman, tglPinjam, tglKembali, anggota, dipinjam);
+        TransaksiPinjaman transaksi = new TransaksiPinjaman(this, idPinjaman, tglPinjam, anggota, dipinjam);
         riwayatTransaksi.add(transaksi);
     }
 
+
+    // Methode untuk memproses pengembalian dan menghitung denda jika terlambat
+    public void prosesPengembalian(String idPinjaman) {
+        TransaksiPinjaman transaksiDitemukan = null;
+
+        for (TransaksiPinjaman transaksi : riwayatTransaksi) {
+            if (transaksi.getIdPinjaman().equals(idPinjaman) && transaksi.getTanggalKembali() == null) {
+                transaksiDitemukan = transaksi;
+                break;
+            }
+        }
+
+        // Jika transaksi tidak ada atau sudah dikembalikan
+        if (transaksiDitemukan == null) {
+            System.out.println("Gagal: Transaksi dengan ID " + idPinjaman + " tidak ditemukan atau sudah diselesaikan.");
+            return;
+        }
+
+        // Update tanggal kembali pada transaksi
+        transaksiDitemukan.setTanggalKembali(LocalDate.now());
+
+        // hitung denda jika terlambat 
+        double denda = transaksiDitemukan.hitungDenda();
+        if (denda > 0) {
+            System.out.println("Peringatan: Pengembalian terlambat! Denda yang harus dibayar: Rp " + denda);
+        } else {
+            System.out.println("Pengembalian tepat waktu. Tidak ada denda.");
+        }
+
+        // Proses pengembalian item
+        for (ItemPerpustakaan item : transaksiDitemukan.getDaftarItem()) {
+            item.kembalikanItem(); 
+        }
+
+        // Update jumlah pinjaman anggota
+        Anggota peminjam = transaksiDitemukan.getPeminjam();
+        int jumlahItemDikembalikan = transaksiDitemukan.getDaftarItem().size();
+        peminjam.setJumlahPinjaman(peminjam.getJumlahPinjaman() - jumlahItemDikembalikan);
+
+        System.out.println("Sukses: Pengembalian untuk transaksi " + idPinjaman + " berhasil diproses.");
+    }
+
     /* GETTER SETTER */
+
+    // Mengembalikan batas pinjaman dalam hari
+    public int getBatasPinjamanHari() {
+        return batasPinjamanHari;
+    }
 
     // Mengembalikan nama perpustakaan
     public String getNamaPerpustakaan() {
@@ -99,6 +187,11 @@ public class SistemPerpustakaan {
         return riwayatTransaksi;
     }
 
+    // Setter untuk batas pinjaman dalam hari
+    public void setBatasPinjamanHari(int batasPinjamanHari) {
+        this.batasPinjamanHari = batasPinjamanHari;
+    }
+
     // Setter untuk nama perpustakaan
     public void setNamaPerpustakaan(String namaPerpustakaan) {
         this.namaPerpustakaan = namaPerpustakaan;
@@ -118,6 +211,5 @@ public class SistemPerpustakaan {
     public void setRiwayatTransaksi(List<TransaksiPinjaman> riwayatTransaksi) {
         this.riwayatTransaksi = riwayatTransaksi;
     }
-
     
 }

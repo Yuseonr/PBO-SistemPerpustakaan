@@ -1,15 +1,16 @@
-// Catatan tambahan
-// Counter untuk itemperpus?
-
-// panah interface ke buku sama majalah aja jangan ke abstract class itemperpus, karena itemperpus itu cuma template, bukan item yang bisa dipinjam
-
-
+/*
+Nama file    : ItemPerpustakaan.java
+Deskripsi    : Berisi Atribute dan Method dalam abstract class ItemPerpustakaan
+Pembuat      : 
+Tanggal      : 26 Maret 2025
+Last update  : 26 Maret 2025
+*/
 
 public abstract class ItemPerpustakaan implements DapatDipinjam {
     /******************** ATRIBUT ********************/
     private String idItem;
     private String judul;
-    private Integer tahunTerbit;
+    private int tahunTerbit;
     private boolean isTersedia;
     private String lokasiRak;
 
@@ -29,6 +30,9 @@ public abstract class ItemPerpustakaan implements DapatDipinjam {
 
     // Methode abstrak untuk menampilkan informasi item perpustakaan
     public abstract void tampilkanInfoItem();
+
+    // Catatan : 
+    // Implementasi dari interface DapatDipinjam wajib dilakukan pada child class ini :  Buku, Majalah
 
     /* SETTER GETTER */
 

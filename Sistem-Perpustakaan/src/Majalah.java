@@ -1,5 +1,10 @@
-
-
+/*
+Nama file    : Majalah.java
+Deskripsi    : Berisi Atribute dan Method dalam class Majalah
+Pembuat      : 
+Tanggal      : 26 Maret 2025
+Last update  : 26 Maret 2025
+*/
 
 public class Majalah extends ItemPerpustakaan{
     /************** ATRIBUT **************/
@@ -7,7 +12,8 @@ public class Majalah extends ItemPerpustakaan{
 
     /************** METHODE **************/
     // Konstruktor tanpa parameter
-    public Majalah() {}
+    public Majalah() {
+    }
 
     // Konstruktor dengan parameter idItem, judul, tahunTerbit, lokasiRak, dan nomorEdisi
     public Majalah(String idItem, String judul, int tahunTerbit, String lokasiRak, int nomorEdisi) {
@@ -39,7 +45,7 @@ public class Majalah extends ItemPerpustakaan{
         System.out.println("Status Tersedia: " + (this.getIsTersedia() ? "Ya" : "Tidak"));
     }
 
-    // Implementasi pinjamItem untuk meminjam buku
+    // Implementasi pinjamItem untuk meminjam majalah
     @Override
     public void pinjamItem() {
         if (this.getIsTersedia()) {
@@ -50,7 +56,7 @@ public class Majalah extends ItemPerpustakaan{
         }
     }
 
-    // Implementasi kembalikanItem untuk mengembalikan buku
+    // Implementasi kembalikanItem untuk mengembalikan majalah
     @Override
     public void kembalikanItem() {
         if (!this.getIsTersedia()) {

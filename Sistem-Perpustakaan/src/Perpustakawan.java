@@ -1,20 +1,31 @@
-// perpustakawan tambah nip
+/*
+Nama file    : Perpustakawan.java
+Deskripsi    : Berisi Atribute dan Method dalam class Perpustakawan
+Pembuat      : 
+Tanggal      : 26 Maret 2025
+Last update  : 26 Maret 2025
+*/
+
+import java.time.LocalTime;
 
 public class Perpustakawan extends Pengguna {
 
     /******************** ATRIBUT ********************/
     private String nip;
-    private String jadwalShif;
+    private LocalTime jadwalMulaiShif;
+    private LocalTime jadwalSelesaiShif;
 
     /******************** METHODE ********************/
     // Konstruktor tanpa parameter
-    public Perpustakawan() {}
+    public Perpustakawan() {
+    }
 
-    // Konstruktor untuk membuat Perpustakawan dengan parameter idPengguna, nama, noHP, nip, dan jadwalShif
-    public Perpustakawan(String idPengguna, String nama, String noHP, String nip, String jadwalShif) {
-        super(idPengguna, nama, noHP);
+    // Konstruktor untuk membuat Perpustakawan dengan parameter idPengguna, nama, noHP,email, umur, nip, jadwalMulaiShif, jadwalSelesaiShif
+    public Perpustakawan(String idPengguna, String nama, String noHP, String email, int umur, String nip, LocalTime jadwalMulaiShif, LocalTime jadwalSelesaiShif) {
+        super(idPengguna, nama, noHP, email, umur);
         this.nip = nip;
-        this.jadwalShif = jadwalShif;
+        this.jadwalMulaiShif = jadwalMulaiShif;
+        this.jadwalSelesaiShif = jadwalSelesaiShif;
     }
 
     /* SETTER GETTER */
@@ -24,9 +35,14 @@ public class Perpustakawan extends Pengguna {
         return nip;
     }
 
-    // Mengembalikan jadwal shift
-    public String getJadwalShif() {
-        return jadwalShif;
+    // Mengembalikan jadwal mulai shift
+    public LocalTime getJadwalMulaiShif() {
+        return jadwalMulaiShif;
+    }
+
+    // Mengembalikan jadwal selesai shift
+    public LocalTime getJadwalSelesaiShif() {
+        return jadwalSelesaiShif;
     }
 
     // Setter untuk NIP
@@ -34,19 +50,27 @@ public class Perpustakawan extends Pengguna {
         this.nip = nip;
     }
 
-    // Setter untuk jadwal shift
-    public void setJadwalShif(String jadwalShif) {
-        this.jadwalShif = jadwalShif;
+    // Setter untuk jadwal mulai shift
+    public void setJadwalMulaiShif(LocalTime jadwalMulaiShif) {
+        this.jadwalMulaiShif = jadwalMulaiShif;
     }
 
-    // Override method tampilkanInfo untuk menampilkan informasi perpustakawan
+    // Setter untuk jadwal selesai shift
+    public void setJadwalSelesaiShif(LocalTime jadwalSelesaiShif) {
+        this.jadwalSelesaiShif = jadwalSelesaiShif;
+    }
+
+    // Override method tampilkanInfoPengguna untuk menampilkan informasi perpustakawan
     @Override
-    public void tampilkanInfo() {
+    public void tampilkanInfoPengguna() {
         System.out.println("--- Data Perpustakawan ---");
         System.out.println("ID Pengguna: " + this.getIdPengguna());
         System.out.println("Nama: " + this.getNama());
         System.out.println("No HP: " + this.getNoHp());
+        System.out.println("Email: " + this.getEmail());
+        System.out.println("Umur: " + this.getUmur());
         System.out.println("NIP: " + this.getNip());
-        System.out.println("Jadwal Shift: " + this.getJadwalShif());
+        System.out.println("Jadwal Mulai Shift: " + this.getJadwalMulaiShif());
+        System.out.println("Jadwal Selesai Shift: " + this.getJadwalSelesaiShif());
     }
 }

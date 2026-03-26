@@ -1,20 +1,25 @@
-
+/*
+Nama file    : Anggota.java
+Deskripsi    : Berisi Atribute dan Method dalam class Anggota
+Pembuat      : 
+Tanggal      : 26 Maret 2025
+Last update  : 26 Maret 2025
+*/
 
 public class Anggota extends Pengguna {
     /******************** ATRIBUT ********************/
     private String nim;
-    private boolean statusAktif;
     private int jumlahPinjaman;
 
     /******************** METHODE ********************/
     // Konstruktor tanpa parameter
-    public Anggota() {}
+    public Anggota() {
+    }
 
-    // Konstruktor untuk membuat Anggota dengan parameter idPengguna, nama, noHP, nim, statusAktif, dan jumlahPinjaman
-    public Anggota(String idPengguna, String nama, String noHP, String nim, boolean statusAktif, int jumlahPinjaman) {
-        super(idPengguna, nama, noHP);
+    // Konstruktor untuk membuat Anggota dengan parameter idPengguna, nama, noHP, email,umur, nim,, dan jumlahPinjaman
+    public Anggota(String idPengguna, String nama, String noHP, String email, int umur, String nim, int jumlahPinjaman) {
+        super(idPengguna, nama, noHP, email, umur);
         this.nim = nim;
-        this.statusAktif = statusAktif;
         this.jumlahPinjaman = jumlahPinjaman;
     }
 
@@ -23,11 +28,6 @@ public class Anggota extends Pengguna {
     // Mengembalikan NIM
     public String getNim() {
         return nim;
-    }
-
-    // Mengembalikan status aktif
-    public boolean getStatusAktif() {
-        return statusAktif;
     }
 
     // Mengembalikan jumlah pinjaman
@@ -40,25 +40,21 @@ public class Anggota extends Pengguna {
         this.nim = nim;
     }
 
-    // Setter untuk status aktif
-    public void setStatusAktif(boolean statusAktif) {
-        this.statusAktif = statusAktif;
-    }
-
     // Setter untuk jumlah pinjaman
     public void setJumlahPinjaman(int jumlahPinjaman) {
         this.jumlahPinjaman = jumlahPinjaman;
     }
 
-    // Override method tampilkanInfo untuk menampilkan informasi anggota
+    // Override method tampilkanInfoPengguna untuk menampilkan informasi anggota
     @Override
-    public void tampilkanInfo() {
+    public void tampilkanInfoPengguna() {
         System.out.println("--- Data Anggota ---");
         System.out.println("ID Pengguna: " + this.getIdPengguna());
         System.out.println("Nama: " + this.getNama());
         System.out.println("No HP: " + this.getNoHp());
+        System.out.println("Email: " + this.getEmail());
+        System.out.println("Umur: " + this.getUmur());
         System.out.println("NIM: " + this.getNim());
-        System.out.println("Status Aktif: " + (this.getStatusAktif() ? "Aktif" : "Tidak Aktif"));
         System.out.println("Jumlah Pinjaman: " + this.getJumlahPinjaman());
     }
 
