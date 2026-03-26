@@ -76,4 +76,48 @@ public class SistemPerpustakaan {
         TransaksiPinjaman transaksi = new TransaksiPinjaman(idPinjaman, tglPinjam, tglKembali, anggota, dipinjam);
         riwayatTransaksi.add(transaksi);
     }
+
+    /* GETTER SETTER */
+
+    // Mengembalikan nama perpustakaan
+    public String getNamaPerpustakaan() {
+        return namaPerpustakaan;
+    }
+
+    // Mengembalikan denda per hari
+    public double getDendaPerHari() {
+        return dendaPerHari;
+    }
+
+    // Mengembalikan koleksi item
+    public List<ItemPerpustakaan> getKoleksiItem() {
+        return koleksiItem;
+    }
+
+    // Mengembalikan riwayat transaksi
+    public List<TransaksiPinjaman> getRiwayatTransaksi() {
+        return riwayatTransaksi;
+    }
+
+    // Setter untuk nama perpustakaan
+    public void setNamaPerpustakaan(String namaPerpustakaan) {
+        this.namaPerpustakaan = namaPerpustakaan;
+    }
+
+    // Setter untuk denda per hari
+    public void setDendaPerHari(double dendaPerHari) {
+        this.dendaPerHari = dendaPerHari;
+    }
+
+    // Setter untuk koleksi item
+    public void setKoleksiItem(List<ItemPerpustakaan> koleksiItem) {
+        this.koleksiItem = koleksiItem;
+    }
+
+    // Setter untuk riwayat transaksi
+    public void setRiwayatTransaksi(List<TransaksiPinjaman> riwayatTransaksi) {
+        this.riwayatTransaksi = riwayatTransaksi;
+    }
+
+    
 }

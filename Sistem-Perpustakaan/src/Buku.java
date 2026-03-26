@@ -1,7 +1,7 @@
 // yang makei nterface buku
 
 
-public class Buku extends ItemPerpustakaan implements DapatDipinjam {
+public class Buku extends ItemPerpustakaan{
     /******************** ATRIBUT ********************/
     private String isbn;
     private String penulis;

@@ -1,7 +1,7 @@
 
 
 
-public class Majalah extends ItemPerpustakaan implements DapatDipinjam {
+public class Majalah extends ItemPerpustakaan{
     /************** ATRIBUT **************/
     private int nomorEdisi;
 
