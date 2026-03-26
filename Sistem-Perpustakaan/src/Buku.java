@@ -76,9 +76,9 @@ public class Buku extends ItemPerpustakaan{
     public void pinjamItem() {
         if (this.getIsTersedia()) {
             this.setIsTersedia(false); // Set status tidak tersedia saat dipinjam
-            System.out.println("Buku dengan ID " + this.getIdItem() + " berhasil dipinjam.");
+            System.out.println("Buku dengan judul '" + this.getJudul() + "' (ID: " + this.getIdItem() + ") berhasil dipinjam.");
         } else {
-            System.out.println("Maaf, buku dengan ID " + this.getIdItem() + " sedang tidak tersedia untuk dipinjam.");
+            System.out.println("Maaf, buku dengan judul '" + this.getJudul() + "' (ID: " + this.getIdItem() + ") sedang tidak tersedia untuk dipinjam.");
         }
     }
 
@@ -87,9 +87,9 @@ public class Buku extends ItemPerpustakaan{
     public void kembalikanItem() {
         if (!this.getIsTersedia()) {
             this.setIsTersedia(true); // Set status tersedia saat dikembalikan
-            System.out.println("Buku dengan ID " + this.getIdItem() + " berhasil dikembalikan.");
+            System.out.println("Buku dengan judul '" + this.getJudul() + "' (ID: " + this.getIdItem() + ") berhasil dikembalikan.");
         } else {
-            System.out.println("Buku dengan ID " + this.getIdItem() + " sudah tersedia di perpustakaan.");
+            System.out.println("Buku dengan judul '" + this.getJudul() + "' (ID: " + this.getIdItem() + ") sudah tersedia di perpustakaan.");
         }
     }
 

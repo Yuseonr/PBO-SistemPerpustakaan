@@ -50,9 +50,9 @@ public class Majalah extends ItemPerpustakaan{
     public void pinjamItem() {
         if (this.getIsTersedia()) {
             this.setIsTersedia(false);
-            System.out.println("Majalah dengan ID " + this.getIdItem() + " berhasildipinjam.");
+            System.out.println("Majalah dengan judul '" + this.getJudul() + "' (ID: " + this.getIdItem() + ") berhasildipinjam.");
         } else {
-            System.out.println("Maaf, majalah dengan ID " + this.getIdItem() + " tidak tersedia untuk dipinjam.");
+            System.out.println("Maaf, majalah dengan judul '" + this.getJudul() + "' (ID: " + this.getIdItem() + ") tidak tersedia untuk dipinjam.");
         }
     }
 
@@ -61,9 +61,9 @@ public class Majalah extends ItemPerpustakaan{
     public void kembalikanItem() {
         if (!this.getIsTersedia()) {
             this.setIsTersedia(true);
-            System.out.println("Majalah dengan ID " + this.getIdItem() + " berhasil dikembalikan.");
+            System.out.println("Majalah dengan judul '" + this.getJudul() + "' (ID: " + this.getIdItem() + ") berhasil dikembalikan.");
         } else {
-            System.out.println("Majalah dengan ID " + this.getIdItem() + " sudah tersedia di perpustakaan.");
+            System.out.println("Majalah dengan judul '" + this.getJudul() + "' (ID: " + this.getIdItem() + ") sudah tersedia di perpustakaan.");
         }   
     }
 }
