@@ -1,0 +1,63 @@
+
+
+
+public class Majalah extends ItemPerpustakaan implements DapatDipinjam {
+    /************** ATRIBUT **************/
+    private int nomorEdisi;
+
+    /************** METHODE **************/
+    // Konstruktor tanpa parameter
+    public Majalah() {}
+
+    // Konstruktor dengan parameter idItem, judul, tahunTerbit, lokasiRak, dan nomorEdisi
+    public Majalah(String idItem, String judul, int tahunTerbit, String lokasiRak, int nomorEdisi) {
+        super(idItem, judul, tahunTerbit, lokasiRak);
+        this.nomorEdisi = nomorEdisi;
+    }
+
+    /* SETTER GETTER */
+    
+    // Mengembalikan nomor edisi
+    public int getNomorEdisi() {
+        return nomorEdisi;
+    }
+
+    // Setter untuk nomor edisi
+    public void setNomorEdisi(int nomorEdisi) {
+        this.nomorEdisi = nomorEdisi;
+    }
+
+    // Override method tampilkanInfoItem
+    @Override
+    public void tampilkanInfoItem() {
+        System.out.println("--- Data Majalah ---");
+        System.out.println("ID Item: " + this.getIdItem());
+        System.out.println("Judul: " + this.getJudul());
+        System.out.println("Edisi: " + this.getNomorEdisi());
+        System.out.println("Tahun Terbit: " + this.getTahunTerbit());
+        System.out.println("Lokasi Rak: " + this.getLokasiRak());
+        System.out.println("Status Tersedia: " + (this.getIsTersedia() ? "Ya" : "Tidak"));
+    }
+
+    // Implementasi pinjamItem untuk meminjam buku
+    @Override
+    public void pinjamItem() {
+        if (this.getIsTersedia()) {
+            this.setIsTersedia(false);
+            System.out.println("Majalah dengan ID " + this.getIdItem() + " berhasildipinjam.");
+        } else {
+            System.out.println("Maaf, majalah dengan ID " + this.getIdItem() + " tidak tersedia untuk dipinjam.");
+        }
+    }
+
+    // Implementasi kembalikanItem untuk mengembalikan buku
+    @Override
+    public void kembalikanItem() {
+        if (!this.getIsTersedia()) {
+            this.setIsTersedia(true);
+            System.out.println("Majalah dengan ID " + this.getIdItem() + " berhasil dikembalikan.");
+        } else {
+            System.out.println("Majalah dengan ID " + this.getIdItem() + " sudah tersedia di perpustakaan.");
+        }   
+    }
+}
