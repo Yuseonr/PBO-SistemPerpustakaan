@@ -1,0 +1,124 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 70
+skinparam ranksep 70
+
+' --- Interface & Abstract Classes ---
+interface DapatDipinjam <<Interface>> {
+    + pinjamItem(): void
+    + kembalikanItem(): void
+}
+
+abstract class ItemPerpustakaan <<Abstract>> {
+    - idItem: String
+    - judul: String
+    - tahunTerbit: int
+    - isTersedia: boolean
+    - lokasiRak: String
+    + {abstract} tampilkanInfoItem(): void
+    + {selector, mutator}()
+}
+
+abstract class Pengguna <<Abstract>> {
+    - idPengguna: String
+    - nama: String
+    - noHp: String
+    - email: String
+    - umur: int
+    + {abstract} tampilkanInfoPengguna(): void
+    + {selector, mutator}()
+}
+
+' --- Concrete Classes (Inheritance) ---
+class Buku {
+    - isbn: String
+    - penulis: String
+    - kategori: String
+    + tampilkanInfoItem(): void <<override>>
+    + pinjamItem(): void <<override>>
+    + kembalikanItem(): void <<override>>
+    + {selector, mutator}()
+}
+
+class Majalah {
+    - nomorEdisi: int
+    + tampilkanInfoItem(): void <<override>>
+    + pinjamItem(): void <<override>>
+    + kembalikanItem(): void <<override>>
+    + {selector, mutator}()
+}
+
+class Anggota {
+    - nim: String
+    - statusAktif: boolean
+    - jumlahPinjaman: int
+    + tampilkanInfoPengguna(): void <<override>>
+    + {selector, mutator}()
+}
+
+class Perpustakawan {
+    - nip: String
+    - jadwalMulaiShif: LocalTime
+    - jadwalSelesaiShif: LocalTime
+    + tampilkanInfoPengguna(): void <<override>>
+    + {selector, mutator}()
+}
+
+' --- Transaction & Management Classes ---
+class TransaksiPinjaman {
+    - idPinjaman: String
+    - tanggalPinjam: LocalDate
+    - tanggalKembali: LocalDate
+    - dendaPerHari: double
+    - batasPinjamanHari: int
+    + hitungDenda(): double
+    + tampilkanDetailTransaksi(): void
+    + {selector, mutator}()
+}
+
+class SistemPerpustakaan {
+    - namaPerpustakaan: String
+    - dendaPerHari: double
+    - batasPinjamanHari: int
+    + cariItem(judul: String): ItemPerpustakaan <<overload>>
+    + cariItem(judul: String, penulis: String): ItemPerpustakaan <<overload>>
+    + tampilkanInfoPerpustakaan(): void
+    + prosesPeminjaman(anggota: Anggota, daftarBukuDipinjam: List<ItemPerpustakaan>): void <<throws Exception>>
+    + prosesPengembalian(idPinjaman: String): void
+    + tambahItem(item: ItemPerpustakaan): void <<uses assertion>>
+    + {selector, mutator}()
+}
+
+class ItemTidakTersediaException <<Exception>> {
+}
+
+class BatasPinjamanException <<Exception>> {
+}
+
+' --- Relationships ---
+
+' Realization / Implementation
+ItemPerpustakaan ..|> DapatDipinjam
+
+' Inheritance
+Buku -up-|> ItemPerpustakaan
+Majalah -up-|> ItemPerpustakaan
+Anggota -up-|> Pengguna
+Perpustakawan -up-|> Pengguna
+
+' Aggregation 
+SistemPerpustakaan o--> "0..*" ItemPerpustakaan : mengelola >
+
+' Composition 
+SistemPerpustakaan *--> "0..*" TransaksiPinjaman : mencatat >
+
+' Association
+TransaksiPinjaman --> "1" Anggota : dipinjam oleh >
+TransaksiPinjaman --> "1..*" ItemPerpustakaan : mencakup >
+
+' Dependency for Exception
+SistemPerpustakaan ..> ItemTidakTersediaException : melempar >
+SistemPerpustakaan ..> BatasPinjamanException : melempar >
+
+@enduml
