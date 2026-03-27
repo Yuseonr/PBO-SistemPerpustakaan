@@ -51,7 +51,6 @@ class Majalah {
 
 class Anggota {
     - nim: String
-    - statusAktif: boolean
     - jumlahPinjaman: int
     + tampilkanInfoPengguna(): void <<override>>
     + {selector, mutator}()
