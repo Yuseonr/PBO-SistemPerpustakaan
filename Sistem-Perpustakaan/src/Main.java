@@ -1,3 +1,18 @@
+/*
+Nama file    : Main.java
+Deskripsi    : Berisi Main Driver dan simulasi penggunaan Sistem Perpustakaan
+Pembuat      : 
+
+Shafa Aqilla Zahira NIM. 24060124140146
+Shofwan Fikrul Huda NIM. 24060124130106
+Syifa Aeni Mudrikah NIM. 24060124120043
+Rafi Anandra Dharmawan NIM. 24060124130071
+
+Tanggal      : 26 Maret 2025
+Last update  : 31 Maret 2025
+*/
+
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,17 +20,21 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
+        // Membuat instance SistemPerpustakaan
         SistemPerpustakaan sistem = new SistemPerpustakaan("Perpustakaan Universitas Diponegoro", 5000.0, 7);
 
+        // Membuat Pengguna Perpustakawan
         Perpustakawan pustakawan1 = new Perpustakawan(
             "P001", "Budi Santoso", "081234567890", "budi.santoso@undip.ac.id", 45,
             "NIP-2001045001", LocalTime.of(8, 0), LocalTime.of(16, 0)
         );
 
+        // Membuat Pengguna Anggota
         Anggota anggota1 = new Anggota("A001", "Andi Prasetyo", "082111222333", "andi.prasetyo@students.undip.ac.id", 20, "24010120130001", 0);
         Anggota anggota2 = new Anggota("A002", "Sari Dewi", "082444555666", "sari.dewi@students.undip.ac.id", 21, "24010120130002", 0);
         Anggota anggota3 = new Anggota("A003", "Rizky Firmansyah", "082777888999", "rizky.firmansyah@students.undip.ac.id", 22, "24010120130003", 0);
-
+        
+        // Menampilkan informasi pengguna
         System.out.println("========================================");
         System.out.println("          DATA PENGGUNA SISTEM          ");
         System.out.println("========================================");
@@ -28,6 +47,7 @@ public class Main {
         anggota3.tampilkanInfoPengguna();
         System.out.println();
 
+        // Membuat item perpustakaan buku
         Buku buku1  = new Buku("B001", "Pemrograman Java Dasar", 2020, "Rak-A1", "978-602-01-0001-1", "Tri Djoko Waluyo", "Teknologi");
         Buku buku2  = new Buku("B002", "Struktur Data dan Algoritma", 2019, "Rak-A2", "978-602-01-0002-2", "Rinaldi Munir", "Teknologi");
         Buku buku3  = new Buku("B003", "Basis Data Relasional", 2021, "Rak-A3", "978-602-01-0003-3", "Fathul Wahid", "Teknologi");
@@ -49,6 +69,7 @@ public class Main {
         Buku buku19 = new Buku("B019", "Sejarah Peradaban Islam", 2020, "Rak-E1", "978-602-01-0019-9", "Philip Hitti", "Sejarah");
         Buku buku20 = new Buku("B020", "Pancasila dan Kewarganegaraan", 2021, "Rak-E2", "978-602-01-0020-0", "Kaelan", "Pendidikan");
 
+        // Membuat item perpustakaan majalah
         Majalah majalah1  = new Majalah("M001", "Tempo",            2024, "Rak-F1",  101);
         Majalah majalah2  = new Majalah("M002", "Kompas Minggu",    2024, "Rak-F1",  202);
         Majalah majalah3  = new Majalah("M003", "National Geographic Indonesia", 2024, "Rak-F2", 303);
@@ -70,6 +91,7 @@ public class Main {
         Majalah majalah19 = new Majalah("M019", "Kesehatan",        2024, "Rak-J1",  999);
         Majalah majalah20 = new Majalah("M020", "Media Indonesia",  2024, "Rak-J1", 1111);
 
+        // Menambahkan item ke dalam sistem perpustakaan
         sistem.tambahItem(buku1);  sistem.tambahItem(buku2);  sistem.tambahItem(buku3);
         sistem.tambahItem(buku4);  sistem.tambahItem(buku5);  sistem.tambahItem(buku6);
         sistem.tambahItem(buku7);  sistem.tambahItem(buku8);  sistem.tambahItem(buku9);
