@@ -1,6 +1,6 @@
 /*
 Nama file    : DapatDipinjam.java
-Deskripsi    : Berisi Atribute dan Method dalam interface DapatDipinjam
+Deskripsi    : Berisi Method dalam interface DapatDipinjam
 Pembuat      : 
 
 Shafa Aqilla Zahira NIM. 24060124140146
