@@ -1,3 +1,18 @@
+/*
+Nama file    : Main.java
+Deskripsi    : Berisi Main Driver dan simulasi penggunaan Sistem Perpustakaan
+Pembuat      : 
+
+Shafa Aqilla Zahira NIM. 24060124140146
+Shofwan Fikrul Huda NIM. 24060124130106
+Syifa Aeni Mudrikah NIM. 24060124120043
+Rafi Anandra Dharmawan NIM. 24060124130071
+
+Tanggal      : 26 Maret 2025
+Last update  : 31 Maret 2025
+*/
+
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
