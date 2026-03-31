@@ -71,18 +71,21 @@ public class SistemPerpustakaan {
         System.out.println("Batas Pinjaman: " + batasPinjamanHari + " hari");
         System.out.println("Jumlah Koleksi Item: " + koleksiItem.size());
         System.out.println("Total Transaksi: " + riwayatTransaksi.size());
+        
         // // Menampilkan daftar item (Mengurangi output agar tidak terlalu panjang)
         // System.out.println("Daftar Item:");
         // for (ItemPerpustakaan item : koleksiItem) {
         //     item.tampilkanInfoItem();
         //     System.out.println();
         // }
+
         // Menampilkan riwayat transaksi
         System.out.println("Riwayat Transaksi:");
         for (TransaksiPinjaman transaksi : riwayatTransaksi) {
             transaksi.tampilkanDetailTransaksi();
             System.out.println();
         }
+
         // Menampilkan anggota yang sedang meminjam
         System.out.println("Anggota yang Sedang Meminjam:");
         for (TransaksiPinjaman transaksi : riwayatTransaksi) {

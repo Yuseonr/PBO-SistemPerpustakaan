@@ -42,10 +42,12 @@ public class Main {
         System.out.println();
         anggota1.tampilkanInfoPengguna();
         System.out.println();
-        anggota2.tampilkanInfoPengguna();
-        System.out.println();
-        anggota3.tampilkanInfoPengguna();
-        System.out.println();
+
+        // Dikomen biar output ngga terlalu panjang
+        // anggota2.tampilkanInfoPengguna();
+        // System.out.println();
+        // anggota3.tampilkanInfoPengguna();
+        // System.out.println();
 
         // Membuat item perpustakaan buku
         Buku buku1  = new Buku("B001", "Pemrograman Java Dasar", 2020, "Rak-A1", "978-602-01-0001-1", "Tri Djoko Waluyo", "Teknologi");
