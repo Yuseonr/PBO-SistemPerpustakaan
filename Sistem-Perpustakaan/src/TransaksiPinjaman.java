@@ -27,15 +27,15 @@ public class TransaksiPinjaman {
     private int batasPinjamanHari;
 
     /******************** METHODE ********************/
-    // Konstruktor dengan parameter sistem, idPinjaman, tanggalPinjam, peminjam, dan daftarItem yang dipinjam
-    public TransaksiPinjaman(SistemPerpustakaan sistem, String idPinjaman, LocalDate tanggalPinjam, Anggota peminjam, List<ItemPerpustakaan> daftarItem) {
+    // Konstruktor dengan parameter dendaPerhari, batasPinjamanHari, idPinjaman, tanggalPinjam, peminjam, dan daftarItem yang dipinjam
+    public TransaksiPinjaman(double dendaPerHari, int batasPinjamanHari, String idPinjaman, LocalDate tanggalPinjam, Anggota peminjam, List<ItemPerpustakaan> daftarItem) {
         this.idPinjaman = idPinjaman;
         this.tanggalPinjam = tanggalPinjam;
         this.tanggalKembali = null; 
         this.peminjam = peminjam;
         this.daftarItem = daftarItem;
-        this.dendaPerHari = sistem.getDendaPerHari();
-        this.batasPinjamanHari = sistem.getBatasPinjamanHari();
+        this.dendaPerHari = dendaPerHari;
+        this.batasPinjamanHari = batasPinjamanHari;
     }
 
     /*  GETTER */

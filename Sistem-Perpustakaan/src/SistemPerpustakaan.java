@@ -71,7 +71,7 @@ public class SistemPerpustakaan {
         System.out.println("Batas Pinjaman: " + batasPinjamanHari + " hari");
         System.out.println("Jumlah Koleksi Item: " + koleksiItem.size());
         System.out.println("Total Transaksi: " + riwayatTransaksi.size());
-        
+
         // // Menampilkan daftar item (Mengurangi output agar tidak terlalu panjang)
         // System.out.println("Daftar Item:");
         // for (ItemPerpustakaan item : koleksiItem) {
@@ -123,7 +123,7 @@ public class SistemPerpustakaan {
         List<ItemPerpustakaan> dipinjam = new ArrayList<>(daftarBukuDipinjam);
         String idPinjaman = "TXN - " + (riwayatTransaksi.size() + 1);
         LocalDate tglPinjam = LocalDate.now();
-        TransaksiPinjaman transaksi = new TransaksiPinjaman(this, idPinjaman, tglPinjam, anggota, dipinjam);
+        TransaksiPinjaman transaksi = new TransaksiPinjaman(this.dendaPerHari, this.batasPinjamanHari, idPinjaman, tglPinjam, anggota, dipinjam);
         riwayatTransaksi.add(transaksi);
     }
 
